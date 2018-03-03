@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Vue practice</title>
+</head>
+<body>
+
+  <div  id="app">
+
+    <p title="test">{{message}}</p>
+    <p v-html="testHtml"></p>
+    <p v-bind:title="nowTime">魔鏡魔鏡，我知道我世界上最低能，我想問現在幾點 v-bind</p>
+    <h2>How many wives do you want ?</h2>
+    <input type="text" v-model="score" name="input">
+    <div v-if="score >= 5"> Don't be greedy</div>
+    <div v-if="score < 5">Are you homosexual?</div>
+    <button v-on:click="rotateText">愛的魔力轉圈圈</button>
+  </div>
+
+  <div id="example">
+    <my-component></my-component>
+    <input type="text" v-model="message" name="input">
+    <p>Original message: {{ message }}</p>
+    <p>Computed reversed message: {{ reverseMessage }}</p>
+    <p>Now time: {{ now() }}</p>
+    <p>FullName: {{ fullName }}</p>
+
+
+    <template v-if="loginType === 'username'">
+      <label>Username</label>
+      <input placeholder="Enter your username" key="name">
+    </template>
+    <template v-else>
+      <label>Email</label>
+      <input placeholder="Enter your email address" key="email">
+    </template>
+
+    <button v-on:click="change()">愛的魔力轉圈圈</button>
+  </div>
+
+  <div id="example-2">
+    <simple-counter></simple-counter>
+    <simple-counter></simple-counter>
+    <simple-counter></simple-counter>
+  </div>
+
+  <div id="example-3">
+    <prompt-component  :userName="name"></prompt-component>
+  </div>
+
+</body>
+</html>
