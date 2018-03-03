@@ -36,4 +36,6 @@ export default {
 
 #### 雜註記
 	
-	node_module is set up as commonJS，所以import並不能被識別，所以rollup 是猜測import的package為何，這不是一個很理想的結果，回頭看bundle後的檔案，沒有任何變動發生，反而假設這個package是從global也就是window傳過來的，ㄏㄏ
+	node_module is set up as commonJS，所以import並不能被識別，所以rollup 是猜測import的package為何，這不是一個很理想的結果，回頭看bundle後的檔案，沒有任何變動發生，反而假設這個package是從global也就是window傳過來的，，因此需要兩個plugin
+	1. read node plugins from node modules directly
+	2. transpile commonJS to ES6，讓rollup知道是什麼鬼

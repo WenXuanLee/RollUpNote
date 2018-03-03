@@ -21,11 +21,10 @@ export default {
   	commonjs(),
 	eslint({
         exclude: 'src/less/**',
-        fix: true,
+        fix: true // rollup-eslint autofix 只針對bundle後的檔案做fix動作
     }),
   	babel({
   		exclude: 'node_modules/**',
   	}),
-  	uglify()
   ]
 };
