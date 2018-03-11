@@ -1,38 +1,3 @@
-### RollUpNote
-
-	練習設定rollup bundlers 並同時比較與webpack bundle後的差距
-
-#### rollup 環境建置
-
-	* npm install --save-dev rollup
-	* plugins
-		* rollup-plugin-babel
-		* rollup-plugin-eslint
-	* rollup -c 開始bundle
-
-#### config檔案
-```
-export default {
-  input: 'src/js/main.js',
-  output: {
-    file: 'dist/bundle.js',
-    format: 'cms'
-  },
-  plugins: [
-	eslint({
-        exclude: 'src/less/**',
-        fix: true,
-    }),
-  	babel({
-  		exclude: 'node_modules/**',
-  	}),
-  ]
-};
-```
-
-* input - 檔案進入點，同webpack中的entry
-* output - 檔案輸出相關設置
-* plugins - plugin使用
 
 ### Slides 
 	整理簡報所講之內容
@@ -46,8 +11,27 @@ export default {
 
 #### Deep into Modules
 	兩個現今主要的 module format
-	CommonJS(server-side) - Node.js
-	AMD - Browser 
+	CommonJS(server-side) - Node.js(主要影響並非完全相同)
+	AMD - Browser
+	今天主要稍微講一下node 處理 module的過程，
+	在Node環境下，我們透過 require & exports來傳遞modules，在Node環境下，每一個獨立的file都是被當成一個modules，而require是內建的函式用於從別的moduleimport symbols到當下的scope，
+
+	Common JS 在server-side的實現為node，但node不全然是commonjs module的樣子，基本共同點為module system都為require & exports，差異在於module.exports，commonJS並沒有module.exports object，這也讓node環境下是不能直接export expression，而要塞入module.exports這個特殊的物件裡面。
+
+	commonJS的設計主要是為了server-side的，
+
+PROS
+* Simple: a developer can grasp the concept without looking at the docs.
+* Dependency management is integrated: modules require other modules and get loaded in the needed order.
+* require can be called anywhere: modules can be loaded programmatically.
+* Circular dependencies are supported.
+CONS
+* Synchronous API makes it not suitable for certain uses (client-side).
+* One file per module.
+* Browsers require a loader library or transpiling.
+* No constructor function for modules (Node supports this though).
+* Hard to analyze for static code analyzers.
+
 
 #### 雜註記
 	
@@ -60,3 +44,5 @@ export default {
 https://hackernoon.com/node-js-tc-39-and-modules-a1118aecf95e
 https://auth0.com/blog/javascript-module-systems-showdown/
 https://medium.com/@brianleroux/es6-modules-amd-and-commonjs-c1acefbe6fc0
+https://stackoverflow.com/questions/43219030/what-is-flat-bundling-and-why-is-rollup-better-at-this-than-webpack/43255948
+https://medium.com/webpack/webpack-and-rollup-the-same-but-different-a41ad427058c
