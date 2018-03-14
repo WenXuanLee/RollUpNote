@@ -16,8 +16,8 @@
 	今天主要稍微講一下node 處理 module的過程，
 	在Node環境下，我們透過 require & exports來傳遞modules，在Node環境下，每一個獨立的file都是被當成一個modules，而require是內建的函式用於從別的moduleimport symbols到當下的scope，
 
-	Common JS 在server-side的實現為node，但node不全然是commonjs module的樣子，基本共同點為module system都為require & exports，差異在於module.exports，commonJS並沒有module.exports object，這也讓node環境下是不能直接export expression，而要塞入module.exports這個特殊的物件裡面。
-
+	Common JS 在server-side的實現為node，但node不全然是commonjs module的樣子，基本共同點為module system都為require & exports，差異在於module.exports，commonJS並沒有module.expression，而要塞入module.exports這個特殊的物件裡面。
+exports object，這也讓node環境下是不能直接export 
 	commonJS的設計主要是為了server-side的，
 
 PROS
@@ -31,6 +31,24 @@ CONS
 * Browsers require a loader library or transpiling.
 * No constructor function for modules (Node supports this though).
 * Hard to analyze for static code analyzers.
+
+Webpack也是依據commonJS的概念來實現module，用於在輸出bundle前轉換處理建立複雜的處理程序的轉型。
+
+Webpack透過commonJS module的概念可以實施到code-splitting，代碼分離，webpack將每個entry點都當作一個cunk分離點，分離點依賴的module會被bundle再一起，每一個分離點都會打包出一個bundle檔案，實施
+非同步載入，也就是這些bundle檔案只在需要的出現的部分才進行載入，在一個使用者互動的app中相對是比一次load完全部的file來的快速
+
+webpack與rollup的module方式差異在於，webpack會將每個module包在一個function裡面，將他們置於一個擁有require，browser-friendly的module實現的bundle裡面，接著再將bundle evaluate one by one，所以省略webpack如何找到require的函式來源，主要差別在於webpack的方法，得等待wrapper function 回傳一個值後，export object才會被require函式存取，所以這樣的方式是得等到wrapper function evaluated後才能知道哪些symbols透過commonjs module export出來，
+
+這與rollup based on ES6的差異在於，commonjs module是動態的，透過wrapper function evaluated，才存取export object，而es6則是lexically，lexical statement有點像是讓parser知道各個區塊的愛恨糾葛，也就是export object在parse階段就已經準備好了，
+
+有點像是 es6的modle import有點像是武藤遊戲的神奇抽卡能力，直接知道要排組中抽出可以逆轉勝的夥伴，commonjs則是沒有主角神力的一般玩家，抽到卡之後才知道，原來我的排組裡面有你。
+
+#### Tree-shaking
+
+	根據module處理import跟require的差別，就可以知道基本上兩者的tree-shaking的概念原則是有很大的區別，Webpack2所稱的tree-shaking其實是跟rollup原作者提的概念大相逕庭的，webpack的tree-shaking本質上比較像是 dead code elimination，所以webpack bundle時實際上還是把全部的module都bundle進來(會在code上mark未用到的code)，而事實上尚未用到的code部分則是透過plugin或者minify的過程中移除unused code，
+
+	Rollup則是在bundle之前，就把unsed code 給去除，比較像是live code inclusion，而這也是主要主打的一個概念，而非像webpack一樣是作Dead code elimination，所以在打包過程中，rollup的效能是比webpack快上許多，打包出來的檔案也相對較小。
+
 
 
 #### 雜註記

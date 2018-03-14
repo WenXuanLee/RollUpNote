@@ -42,17 +42,6 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader',
       }, 
-      {
-        enforce: "pre",
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: "eslint-loader",
-        options: {
-          // eslint options (if necessary)
-          failOnWarning: true,
-          fix: true,
-        }
-      }
   ]},
   // devServer 則是 webpack-dev-server 設定
   devServer: {

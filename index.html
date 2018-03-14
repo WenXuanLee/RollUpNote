@@ -1,52 +1,44 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title>Vue practice</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+
+	<title>Color Game</title>
+	<link rel="stylesheet" type="text/css" href="rollup.build.css">
 </head>
+
 <body>
+	<div id="stripe">
+		<div id="navbar" class="container">
+			<span id="brand" href="#">Color Game</span>
+			<a href="#" class="mode">Easy</a>
+			<a href="#" class="mode selected">Hard</a>
+			<a href="#" class="mode">Nightmare</a>
+			<span href="#" id="about">DataLab</span>
+		</div>
+	</div>
 
-  <div  id="app">
+	<h1><span id="color-picked">RGB</span><br><span id="message">What's the color?</span><span id="countdown"></span></h1>
 
-    <p title="test">{{message}}</p>
-    <p v-html="testHtml"></p>
-    <p v-bind:title="nowTime">魔鏡魔鏡，我知道我世界上最低能，我想問現在幾點 v-bind</p>
-    <h2>How many wives do you want ?</h2>
-    <input type="text" v-model="score" name="input">
-    <div v-if="score >= 5"> Don't be greedy</div>
-    <div v-if="score < 5">Are you homosexual?</div>
-    <button v-on:click="rotateText">愛的魔力轉圈圈</button>
-  </div>
+	<div id="card-container" class="container">
+		<div class="card"></div>
+		<div class="card"></div>
+		<div class="card"></div>
+		<div class="card"></div>
+		<div class="card"></div>
+		<div class="card"></div>
+	</div>
 
-  <div id="example">
-    <my-component></my-component>
-    <input type="text" v-model="message" name="input">
-    <p>Original message: {{ message }}</p>
-    <p>Computed reversed message: {{ reverseMessage }}</p>
-    <p>Now time: {{ now() }}</p>
-    <p>FullName: {{ fullName }}</p>
+	<div id="footer">
+		<button id="reset"><i class="fa fa-retweet" aria-hidden="true"></i>&nbsp;&nbsp;<span>New Color</span></button>
+	</div>
 
-
-    <template v-if="loginType === 'username'">
-      <label>Username</label>
-      <input placeholder="Enter your username" key="name">
-    </template>
-    <template v-else>
-      <label>Email</label>
-      <input placeholder="Enter your email address" key="email">
-    </template>
-
-    <button v-on:click="change()">愛的魔力轉圈圈</button>
-  </div>
-
-  <div id="example-2">
-    <simple-counter></simple-counter>
-    <simple-counter></simple-counter>
-    <simple-counter></simple-counter>
-  </div>
-
-  <div id="example-3">
-    <prompt-component  :userName="name"></prompt-component>
-  </div>
-
+<script type="text/javascript" src="dist/bundle.js"></script>
 </body>
+
 </html>
